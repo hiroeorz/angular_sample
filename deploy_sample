@@ -1,0 +1,38 @@
+#!/bin/sh
+
+riak_host=$1
+riak_port=8098
+
+cd sample
+
+deploy() {
+  filename=$1
+  content_type=$2
+  content=`cat ${filename}`
+
+  echo -n "   deploy ${filename}..."
+  curl -X PUT https://${riak_host}:${riak_port}/buckets/angular_sample/keys/${filename} \
+       -H "content-type: ${content_type}" -d "${content}" --insecure && \
+  echo "done."
+}
+
+
+deploy_html() { 
+  deploy $1 "text/html"
+}
+
+deploy_js() {
+  deploy $1 "text/javascript"
+}
+
+echo "deploy html"
+
+for html in `ls *.html`; do
+  deploy_html $html
+done
+
+echo "deploy javascript"
+
+for js in `ls *.js`; do
+  deploy_js $js
+done

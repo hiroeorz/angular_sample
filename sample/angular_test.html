@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" ng-app>
+<head>
+  <meta charset="utf-8">
+  <title>Step.1 - Start</title>
+  <script src="angular.mini.js"></script>
+  <script src="todo.js"></script>
+  <script src="todo_server.js"></script>
+
+</head>
+<body>
+
+<!--------------------------- 文字列の連結 ------------------------------->
+<div>
+  <h2>文字列の連結</h2>
+  <p>Let's {{'enjoy ' + 'Angular.js'}}</p>
+</div>
+
+<hr>
+
+<!-------------------- 文字列の取り出しと埋め込み --------------------------->
+
+<div>
+  <h2>値取り出しと埋め込み</h2>
+  <label>Name:</label>
+  <input type="text" ng-model="yourName" placeholder="Enter your Name">
+  <h1>Hello {{yourName}}</h1>
+</div>
+
+<hr>
+
+<!-------------------- HTMLコンテンツ操作 --------------------------->
+
+<div ng-controller="TodoCtrl">
+  <h2>todo管理</h2>
+  <span>残り：{{ nokori() }}</span>
+
+  <ul>
+    <li ng-repeat="todo in todos">
+      <input type="checkbox" ng-model="todo.done">
+      <span>{{todo.text}}</span>
+    </li>
+  </ul>
+
+  <form ng-submit="addTodo()">
+    <input type="text" ng-model="todoText" placeholder="add new todo">
+    <input type="submit" value="追加">
+  </form>
+</div>
+
+<hr>
+<!-------------------- サーバー通信 --------------------------->
+
+<div ng-controller="TodoServerCtrl">
+  <h2>todo管理（サーバー連携板）</h2>
+  <span>残り：{{ nokori() }}</span>
+
+  <ul>
+    <li ng-repeat="todo in todos">
+      <input type="checkbox" ng-model="todo.done" 
+                             ng-change="changeDone(todo)">
+      <span>{{todo.text}}</span>
+    </li>
+  </ul>
+
+  <form ng-submit="addTodo()">
+    <input type="text" ng-model="todoText" placeholder="add new todo">
+    <input type="submit" value="追加">
+  </form>
+
+  <input type="submit" value="全て削除" ng-click="clearTodo()">
+</div>
+
+</body>
+</html>
